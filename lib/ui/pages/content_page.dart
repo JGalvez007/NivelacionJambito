@@ -21,7 +21,7 @@ class _ContentPageState extends State<ContentPage> {
     });
   }
 
-  _logout() async {
+  _logout() async { //logo para cerrar la session
     try {
       await authenticationController.logOut();
     } catch (e) {
@@ -33,7 +33,7 @@ class _ContentPageState extends State<ContentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Welcome ${authenticationController.userEmail()}"),
+          title: Text("Bienvenido ${authenticationController.userEmail()}"),//da el dato de correo en el app bar
           actions: [
             IconButton(
                 icon: const Icon(Icons.exit_to_app),
@@ -44,11 +44,11 @@ class _ContentPageState extends State<ContentPage> {
       body: _widgets.elementAt(_selectIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Firestore"),
-          BottomNavigationBarItem(icon: Icon(Icons.business), label: "Chat")
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Grupos"),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Sesión de Trabajo")
         ],
         currentIndex: _selectIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.blue[800],
         onTap: _onItemTapped,
       ),
     );

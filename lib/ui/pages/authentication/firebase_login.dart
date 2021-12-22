@@ -31,7 +31,7 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(20), 
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +41,7 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                "Login with email",
+                "Proyecto de nivelación: INICIO",
                 style: TextStyle(fontSize: 20),
               ),
               SizedBox(
@@ -50,21 +50,21 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: this.controllerEmail,
-                decoration: InputDecoration(labelText: "Email address"),
+                decoration: InputDecoration(labelText: "Correo"),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Enter email";
                   } else if (!value.contains('@')) {
-                    return "Enter valid email address";
+                    return "Ingresa Correo Valido";
                   }
                 },
               ),
               SizedBox(
                 height: 20,
               ),
-              TextFormField(
+              TextFormField(//controla lo ddel password en el login
                 controller: this.controllerPassword,
-                decoration: InputDecoration(labelText: "Password"),
+                decoration: InputDecoration(labelText: "Contraseña"),
                 keyboardType: TextInputType.number,
                 obscureText: true,
                 validator: (value) {
@@ -90,7 +90,7 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
                           controllerEmail.text, controllerPassword.text);
                     }
                   },
-                  child: Text("Submit")),
+                  child: Text("Ingresar")),
             ]),
           ),
           TextButton(
@@ -98,7 +98,7 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => FirebaseSignUp()));
               },
-              child: Text("Create account"))
+              child: Text("Crea Una Cuenta"))
         ],
       ),
     );

@@ -10,14 +10,41 @@ class ChatController extends GetxController {
 
   //Método start para comenzar a escuchar la colección de documentos FlutterMessages,   
   //que contiene el mensaje a enviar en los chats   
-  // start() {}
+  start() {
+    messages.clear();
+    databaseReference
+      .child("fluttermessages")
+      .onChildAdded
+      .listen(_onEntryAdded);
+    databaseReference
+      .child("fluttermessages")
+      .onChildChanged
+      .listen(_onEntryChanged);
+  }
 
   //Método onEntryChanged listener  
   //para añadir al listado los mensajes que llegan de la db
-  // _onEntryChanged(Event event) {}
+  _onEntryChanged(Event event) {
+    var oldEntry =messages.singleWhere((entry) {
+      return entry.key==event.snapshot.key;
+    });
+    messages[messages.indexOf(oldEntry)]=Message.fromSnapshot(event.snapshot);
+  }
 
   //Método stop para dejar de escuchar la colección
-  // stop() {}
+  stop() {
+    
+    databaseReference
+      .child("fluttermessages")
+      .onChildAdded
+      .listen(_onEntryAdded)
+      .cancel();
+    databaseReference
+      .child("fluttermessages")
+      .onChildChanged
+      .listen(_onEntryChanged)
+      .cancel();
+  }
 
   _onEntryAdded(Event event) {
     print("Something was added");
@@ -25,7 +52,19 @@ class ChatController extends GetxController {
   }
 
   //Método sendmsg para enviar un nuevo mensaje
-  // Future<void> sendMsg(String text) async {}
+  Future<void> sendMsg(String text) async {
+    String uid=FirebaseAuth.instance.currentUser!.uid;
+    try{
+      databaseReference
+        .child("fluttermessages")
+        .push()
+        .set({'text': text,'uid':uid});
+      }catch (error) {
+        logError("Error sending message $error");
+        return Future.error(error);
+      }
+    }
+  
 
   Future<void> updateMsg(Message message) async {
     logInfo('updateMsg with key ${message.key}');
@@ -53,4 +92,5 @@ class ChatController extends GetxController {
       return Future.error(error);
     }
   }
+
 }

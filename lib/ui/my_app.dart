@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'firebase_central.dart';
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp(); //con esto se da uso de la base de datos
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-          body: FutureBuilder(
+          body: FutureBuilder( //toma la inicializacion, para leer datos
         future: _initialization,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
             return Wrong();
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            Get.put(FirebaseController());
+            Get.put(FirebaseController()); //los getput es para inyeccion de dependencia
             Get.put(AuthenticationController());
             Get.put(ChatController());
             return FirebaseCentral();

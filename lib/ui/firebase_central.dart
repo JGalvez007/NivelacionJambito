@@ -8,7 +8,7 @@ class FirebaseCentral extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
+      stream: FirebaseAuth.instance.authStateChanges(), //la autenticacion
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ContentPage();
