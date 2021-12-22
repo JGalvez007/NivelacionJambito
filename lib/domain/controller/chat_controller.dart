@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:f_202110_firebase/data/model/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -7,6 +9,7 @@ import 'package:loggy/loggy.dart';
 class ChatController extends GetxController {
   final databaseReference = FirebaseDatabase.instance.reference();
   var messages = <Message>[].obs;
+<<<<<<< HEAD
 
   //Método start para comenzar a escuchar la colección de documentos FlutterMessages,   
   //que contiene el mensaje a enviar en los chats   
@@ -24,6 +27,28 @@ class ChatController extends GetxController {
 
   //Método onEntryChanged listener  
   //para añadir al listado los mensajes que llegan de la db
+=======
+  late StreamSubscription<Event> newEntryStreamSubscription;
+  late StreamSubscription<Event> updateEntryStreamSubscription;
+  start() {
+    messages.clear();
+    newEntryStreamSubscription = databaseReference
+        .child("fluttermessages")
+        .onChildAdded
+        .listen(_onEntryAdded);
+
+    updateEntryStreamSubscription = databaseReference
+        .child("fluttermessages")
+        .onChildChanged
+        .listen(_onEntryChanged);
+  }
+
+  stop() {
+    newEntryStreamSubscription.cancel();
+    updateEntryStreamSubscription.cancel();
+  }
+
+>>>>>>> b09d346f6001b92c886f08f6f84e85a9caec1091
   _onEntryChanged(Event event) {
     var oldEntry =messages.singleWhere((entry) {
       return entry.key==event.snapshot.key;
@@ -31,6 +56,7 @@ class ChatController extends GetxController {
     messages[messages.indexOf(oldEntry)]=Message.fromSnapshot(event.snapshot);
   }
 
+<<<<<<< HEAD
   //Método stop para dejar de escuchar la colección
   stop() {
     
@@ -46,6 +72,8 @@ class ChatController extends GetxController {
       .cancel();
   }
 
+=======
+>>>>>>> b09d346f6001b92c886f08f6f84e85a9caec1091
   _onEntryAdded(Event event) {
     print("Something was added");
     messages.add(Message.fromSnapshot(event.snapshot));
